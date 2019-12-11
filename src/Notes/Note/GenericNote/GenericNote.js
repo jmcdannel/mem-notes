@@ -28,32 +28,32 @@ function GenericNote({
   const formatField = field => {
     const value = note[field.id];
     switch (field.type) {
-      case 'date' :
+      case 'date':
         return format(value, 'MM/dd/yyyy');
-      default :
-      return value;
+      default:
+        return value;
     }
   }
 
   return noteType ? (
-      <CardContent className={classes.cardContent}>
-        <Divider />  
-        {note.getContent
-          ? note.getContent(note)
-          : note.text && (<p>{note.text}</p>)
-        }
-        <Divider />  
-        <div className={classes.section}>
-          {noteType.fields && noteType.fields.length > 0 && noteType.fields.map(field => (
-            <Chip 
-              key={field.id}
-              className={classes.chip} 
-              icon={(<strong>{field.label}:</strong>)} 
-              label={formatField(field)} 
-              />
-          ))}
-        </div>
-      </CardContent>
+    <CardContent className={classes.cardContent}>
+      <Divider />
+      {note.getContent
+        ? note.getContent(note)
+        : note.text && (<p>{note.text}</p>)
+      }
+      <Divider />
+      <div className={classes.section}>
+        {noteType.fields && noteType.fields.length > 0 && noteType.fields.map(field => (
+          <Chip
+            key={field.id}
+            className={classes.chip}
+            icon={(<strong>{field.label}:</strong>)}
+            label={formatField(field)}
+          />
+        ))}
+      </div>
+    </CardContent>
   ) : null;
 }
 
