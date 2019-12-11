@@ -11,9 +11,9 @@ function Reminder({ note, setNote, setIsValid }) {
     setNote({ ...note, ...delta });
     validate();
   };
-  
+
   const validate = () => {
-    const valid = ( note.text && note.text.length > 3);
+    const valid = (note.text && note.text.length > 3);
     setIsValid(valid);
   }
 
@@ -29,7 +29,7 @@ function Reminder({ note, setNote, setIsValid }) {
       onChange={handleChange}
     />
   );
-}
+};
 
 Reminder.propTypes = {
   note: PropTypes.shape({

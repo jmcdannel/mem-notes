@@ -6,6 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
 const useStyles = makeStyles(theme => ({
   list: {
     width: '100%',
@@ -15,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 function NoteType({ noteTypes, selectedType, setSelectedType }) {
   const classes = useStyles();
+
   const handleType = type => {
     if (selectedType && selectedType.id === type.id) {
       setSelectedType(undefined);
@@ -30,9 +32,9 @@ function NoteType({ noteTypes, selectedType, setSelectedType }) {
       </DialogContentText>
       <List className={classes.list} component="nav" aria-label="select note type">
         {noteTypes.map(type => (
-          <ListItem button 
+          <ListItem button
             key={type.id}
-            onClick={() => handleType(type)} 
+            onClick={() => handleType(type)}
             selected={(selectedType && selectedType.id === type.id)}>
             <ListItemText primary={type.label} />
           </ListItem>
@@ -41,5 +43,11 @@ function NoteType({ noteTypes, selectedType, setSelectedType }) {
     </React.Fragment>
   );
 }
+
+NoteType.propTypes = {
+  noteTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedType: PropTypes.object,
+  setSelectedType: PropTypes.func.isRequired
+};
 
 export default NoteType;

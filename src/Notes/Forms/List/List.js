@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import {
   MuiPickersUtilsProvider,
@@ -21,8 +22,6 @@ export const noteType = 'list';
 function List({ note, setNote, setIsValid }) {
 
   const defaultNote = { text: '', dueDate: null, getContent };
-
-
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function List({ note, setNote, setIsValid }) {
       setNote(n => { return { ...n, ...defaultNote } });
       setInitialized(true);
     }
-  }, [initialized, setInitialized, setNote, defaultNote] );
+  }, [initialized, setInitialized, setNote, defaultNote]);
 
   const handleChange = event => {
     const delta = { text: event.target.value };
@@ -52,24 +51,24 @@ function List({ note, setNote, setIsValid }) {
   return (
     <React.Fragment>
       <div>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          disableToolbar
-          autoOk
-          disablePast
-          variant="inline"
-          margin="normal"
-          format="MM/dd/yyyy"
-          id="dueDate"
-          label="Due Date"
-          value={note.dueDate || defaultNote.dueDate}
-          onChange={handleDateChange}
-          className="note-form"
-          KeyboardButtonProps={{
-            'aria-label': 'update due date',
-          }}
-        />
-      </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            autoOk
+            disablePast
+            variant="inline"
+            margin="normal"
+            format="MM/dd/yyyy"
+            id="dueDate"
+            label="Due Date"
+            value={note.dueDate || defaultNote.dueDate}
+            onChange={handleDateChange}
+            className="note-form"
+            KeyboardButtonProps={{
+              'aria-label': 'update due date',
+            }}
+          />
+        </MuiPickersUtilsProvider>
       </div>
       <div>
         <TextField
@@ -85,6 +84,15 @@ function List({ note, setNote, setIsValid }) {
       </div>
     </React.Fragment>
   );
-}
+};
+
+List.propTypes = {
+  note: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string,
+    dueDate: PropTypes.instanceOf(Date)
+  }),
+};
 
 export default List;

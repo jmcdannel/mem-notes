@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import {
   MuiPickersUtilsProvider,
@@ -33,24 +34,24 @@ function DueDate({ note, setNote, setIsValid }) {
   return (
     <React.Fragment>
       <div>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          disableToolbar
-          autoOk
-          disablePast
-          variant="inline"
-          margin="normal"
-          format="MM/dd/yyyy"
-          id="dueDate"
-          label="Due Date"
-          value={note.dueDate || defaultNote.dueDate}
-          onChange={handleDateChange}
-          className="note-form"
-          KeyboardButtonProps={{
-            'aria-label': 'update due date',
-          }}
-        />
-      </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            autoOk
+            disablePast
+            variant="inline"
+            margin="normal"
+            format="MM/dd/yyyy"
+            id="dueDate"
+            label="Due Date"
+            value={note.dueDate || defaultNote.dueDate}
+            onChange={handleDateChange}
+            className="note-form"
+            KeyboardButtonProps={{
+              'aria-label': 'update due date',
+            }}
+          />
+        </MuiPickersUtilsProvider>
       </div>
       <div>
         <TextField
@@ -66,6 +67,15 @@ function DueDate({ note, setNote, setIsValid }) {
       </div>
     </React.Fragment>
   );
-}
+};
+
+DueDate.propTypes = {
+  note: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string,
+    dueDate: PropTypes.instanceOf(Date)
+  }),
+};
 
 export default DueDate;

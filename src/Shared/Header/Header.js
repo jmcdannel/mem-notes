@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { generatePirateIpsum } from '../../Store/Notes';
+import { generatePirateIpsum } from '../Utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,19 +22,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-
 function Header({ dispatch }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = event => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
   const handleLoad = () => {
     dispatch({ type: 'setNotes', payload: generatePirateIpsum() })

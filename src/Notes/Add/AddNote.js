@@ -36,67 +36,65 @@ function AddNote(props) {
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    const newNote = { 
-      type: selectedType ? selectedType.id : null, 
-      id: numNotes
+    const newNote = {
+      type: selectedType ? selectedType.id : null,
+      id: numNotes // TODO: use more robust unique ID.
     };
     setNote(n => { return { ...n, ...newNote }; });
     setIsValid(false);
   }, [selectedType, setIsValid, numNotes]);
 
-
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    close();
-  };
+
+  const handleClose = () => close();
+
   const handleCreate = () => {
     props.dispatch({ type: 'add', payload: note });
     close();
   };
 
   const close = () => {
-    setSelectedType();
+    setSelectedType(null);
     setOpen(false);
     setNote({});
     setLoadForm(false);
     setIsValid(false);
   }
-  
+
   return (
     <React.Fragment>
       <Fab onClick={handleOpen} aria-label="Add Note" className={classes.fab} color="secondary">
         <AddIcon />
       </Fab>
 
-      <Dialog 
+      <Dialog
         fullWidth={true}
         maxWidth={'sm'}
-        onClose={handleClose} 
-        aria-labelledby="add-note-dialog-title" 
+        onClose={handleClose}
+        aria-labelledby="add-note-dialog-title"
         open={open}>
         <DialogTitle id="add-note-dialog-title">Add Note</DialogTitle>
         <DialogContent>
-          {!!loadForm 
-            ? (<FormLoader 
-                note={note}
-                setNote={setNote} 
-                state={props.state} 
-                dispatch={props.dispatch} 
-                setIsValid={setIsValid}
-              />)
+          {!!loadForm
+            ? (<FormLoader
+              note={note}
+              setNote={setNote}
+              state={props.state}
+              setIsValid={setIsValid}
+            />)
             : (<NoteType noteTypes={props.state.noteTypes} setSelectedType={setSelectedType} selectedType={selectedType} />)}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleClose}>
             Cancel
           </Button>
           {!!loadForm
             ? (
-              <Button onClick={handleCreate} color="primary" disabled={!isValid}>
+              <Button onClick={handleCreate} color="secondary" disabled={!isValid}>
                 Save
               </Button>
             ) : (
-              <Button onClick={() => setLoadForm(true)} color="primary" disabled={!selectedType}>
+              <Button onClick={() => setLoadForm(true)} color="secondary" disabled={!selectedType}>
                 Next
               </Button>
             )}

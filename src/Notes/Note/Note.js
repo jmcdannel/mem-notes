@@ -33,8 +33,8 @@ function Note({
   const handleDelete = () => dispatch({ type: 'remove', payload: note });
 
   const renderComponent = () => {
-    const NoteComponent = noteType.renderer;
-    return ( <NoteComponent note={note} noteType={noteType} />);
+    const NoteComponent = noteType.renderer;  // important: use Capital letter for this `const` to enable React to render as a component
+    return (<NoteComponent note={note} noteType={noteType} />);
   }
 
   return noteType ? (
