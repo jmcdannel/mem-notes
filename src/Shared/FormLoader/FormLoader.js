@@ -16,7 +16,7 @@ function FormLoader(props) {
 
   
   const renderComponent = () => {
-    const FormComponent = noteType.component;
+    const FormComponent = noteType.form;
     return ( <FormComponent className="note-form" {...props} />);
   }
 

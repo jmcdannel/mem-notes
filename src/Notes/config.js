@@ -1,6 +1,7 @@
 import DueDate from './Forms/DueDate/DueDate';
 import List from './Forms/List/List';
 import Reminder from './Forms/Reminder/Reminder';
+import GenericNote from './Note/GenericNote/GenericNote';
 
 export const notesConfig = {
   types: [
@@ -8,13 +9,15 @@ export const notesConfig = {
       id: 'reminder',
       label: 'Reminder',
       header: 'Reminder',
-      component: Reminder
+      form: Reminder,
+      renderer: GenericNote
     },
     {
       id: 'dueDate',
       label: 'Note w/Due Date',
       header: 'Due By',
-      component: DueDate,
+      form: DueDate,
+      renderer: GenericNote,
       fields: [
         { label: 'Due Date', id: 'dueDate', type: 'date' }
       ]
@@ -23,7 +26,8 @@ export const notesConfig = {
       id: 'list',
       label: 'List',
       header: 'List',
-      component: List
+      form: List,
+      renderer: GenericNote
     }
   ]
 }
