@@ -2,6 +2,7 @@ import DueDate from './Forms/DueDate/DueDate';
 import List from './Forms/List/List';
 import Reminder from './Forms/Reminder/Reminder';
 import GenericNote from './Note/GenericNote/GenericNote';
+import ListNote from './Note/ListNote/ListNote';
 
 export const notesConfig = {
   types: [
@@ -27,7 +28,7 @@ export const notesConfig = {
       label: 'List',
       header: 'List',
       form: List,
-      renderer: GenericNote
+      renderer: ListNote
     }
   ]
 }

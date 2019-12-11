@@ -11,17 +11,18 @@ import AddNote from './Notes/Add/AddNote';
 import './MemNotes.scss';
 
 const theme = createMuiTheme({
-  palette: {  type: 'dark' }
+  palette: { type: 'dark' }
 });
 
 function MemNotes() {
   const [state, dispatch] = useReducer(notesReducer, initialState);
+  const { notes } = state;
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(state.notes));
-  }, [state.notes]);
+    window.localStorage.setItem(storageKey, JSON.stringify(notes));
+  }, [notes, notes.length]);
 
-  return ( 
+  return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header dispatch={dispatch} />
@@ -37,9 +38,9 @@ function MemNotes() {
                 )}
                 {state.notes.map((note, idx) => (
                   <Grid key={idx} item xs={12} sm={6} md={4} lg={3}>
-                    <Note 
+                    <Note
                       note={note}
-                      state={state} 
+                      state={state}
                       dispatch={dispatch}
                     />
                   </Grid>
@@ -50,7 +51,7 @@ function MemNotes() {
           <AddNote state={state} dispatch={dispatch} />
         </Container>
       </Box>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }
 

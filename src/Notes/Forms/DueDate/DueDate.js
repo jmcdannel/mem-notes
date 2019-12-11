@@ -6,7 +6,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { isValid } from 'date-fns/fp'
+import { isValid } from 'date-fns/fp';
 
 export const noteType = 'dueDate';
 

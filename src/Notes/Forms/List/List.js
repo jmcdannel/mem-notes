@@ -8,20 +8,11 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { isValid } from 'date-fns/fp';
 
-const getContent = note => {
-  return (
-    <ul>
-      {note.text.split('\n').map((item, idx) => (
-        <li key={idx}>{item}</li>
-      ))}
-    </ul>);
-}
-
 export const noteType = 'list';
 
 function List({ note, setNote, setIsValid }) {
 
-  const defaultNote = { text: '', dueDate: null, getContent };
+  const defaultNote = { text: '', title: '', dueDate: null };
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -37,6 +28,12 @@ function List({ note, setNote, setIsValid }) {
     validate();
   };
 
+  const handleTitleChange = event => {
+    const delta = { title: event.target.value };
+    setNote({ ...note, ...delta });
+    validate();
+  };
+
   const handleDateChange = date => {
     const delta = { dueDate: date };
     setNote({ ...note, ...delta });
@@ -44,7 +41,10 @@ function List({ note, setNote, setIsValid }) {
   };
 
   const validate = () => {
-    const valid = (isValid(note.dueDate) && note.text && note.text.length > 3);
+    const valid = (
+      (!note.dueDate || (note.dueDate && isValid(note.dueDate))) &&
+      (note.text && note.text.length > 3)
+    );
     setIsValid(valid);
   }
 
@@ -73,7 +73,17 @@ function List({ note, setNote, setIsValid }) {
       <div>
         <TextField
           id="text"
-          label="Note Text"
+          label="Title"
+          value={note.title || defaultNote.title}
+          className="note-form"
+          onChange={handleTitleChange}
+        />
+      </div>
+      <div>
+        <TextField
+          id="text"
+          label="List Items"
+          placeholder="Separate with new lines"
           multiline
           rows="10"
           rowsMax="10"
@@ -91,6 +101,7 @@ List.propTypes = {
     type: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     text: PropTypes.string,
+    title: PropTypes.string,
     dueDate: PropTypes.instanceOf(Date)
   }),
 };

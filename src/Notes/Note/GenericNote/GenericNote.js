@@ -38,10 +38,7 @@ function GenericNote({
   return noteType ? (
     <CardContent className={classes.cardContent}>
       <Divider />
-      {note.getContent
-        ? note.getContent(note)
-        : note.text && (<p>{note.text}</p>)
-      }
+      {note.text && (<p>{note.text}</p>)}
       <Divider />
       <div className={classes.section}>
         {noteType.fields && noteType.fields.length > 0 && noteType.fields.map(field => (
@@ -61,8 +58,7 @@ GenericNote.propTypes = {
   note: PropTypes.shape({
     type: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    text: PropTypes.string,
-    getContent: PropTypes.func
+    text: PropTypes.string
   })
 };
 

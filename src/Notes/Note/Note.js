@@ -7,7 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+import { isValid, parseISO } from 'date-fns/fp';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -46,7 +47,10 @@ function Note({
           </Avatar>
         }
         title={noteType.header}
-        subheader={note.dueDate ? format(note.dueDate, 'MM/dd/yyyy') : null}
+        subheader={note.dueDate && isValid(parseISO(note.dueDate))
+          ? format(parseISO(note.dueDate), 'MM/dd/yyyy')
+          : null
+        }
       />
       {renderComponent()}
       <CardActions>
@@ -62,8 +66,7 @@ Note.propTypes = {
   note: PropTypes.shape({
     type: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    text: PropTypes.string,
-    getContent: PropTypes.func
+    text: PropTypes.string
   }),
   state: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired

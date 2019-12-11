@@ -66,7 +66,6 @@ function AddNote(props) {
       <Fab onClick={handleOpen} aria-label="Add Note" className={classes.fab} color="secondary">
         <AddIcon />
       </Fab>
-
       <Dialog
         fullWidth={true}
         maxWidth={'sm'}

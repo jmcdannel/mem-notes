@@ -49,7 +49,7 @@ ___
 
 > Recommended Path: `./src/Notes/Note/[NoteComponent]/[NoteComponent]`
 
-A `<GenericNote>` component is provided. It will output content returned from a `getContent` function supplied by the `Form Compnent`. If `getContent` is abesnt, the `text` value will be displayed in a `<p></p>`. Additionally, any fields defined in the `fields` property definted in  [/src/Notes/config.js](blob/master/src/Notes/config.js) will be output as a `<Chip>`.
+A `<GenericNote>` component is provided. It will output content of the `text` value will be displayed in a `<p></p>`. Additionally, any fields defined in the `fields` property definted in  [/src/Notes/config.js](blob/master/src/Notes/config.js) will be output as a `<Chip>`.
 
 ### Props
 
@@ -64,10 +64,7 @@ A `<GenericNote>` component is provided. It will output content returned from a 
 // example
 <CardContent>
 	<Divider />  
-	{note.getContent
-		? note.getContent(note)
-		: note.text && (<p>{note.text}</p>)
-	}
+	{note.text && (<p>{note.text}</p>)}
 	<Divider />  
 	<div className={classes.section}>
 		{noteType.fields && noteType.fields.length > 0 && noteType.fields.map(field => (
