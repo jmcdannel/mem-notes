@@ -27,37 +27,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddNote(props) {
+  const { length: numNotes } = props.state.notes;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState();
   const [loadForm, setLoadForm] = useState(false);
   const [note, setNote] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
     const newNote = { 
-      type: selectedType ? selectedType.value : null, 
-      id: props.state.notes.length 
+      type: selectedType ? selectedType.id : null, 
+      id: numNotes
     };
-    setNote({ ...note, ...newNote});
-  }, [selectedType]);
+    setNote(n => { return { ...n, ...newNote }; });
+    setIsValid(false);
+  }, [selectedType, setIsValid, numNotes]);
 
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    close();
+  };
   const handleCreate = () => {
     props.dispatch({ type: 'add', payload: note });
+    close();
+  };
+
+  const close = () => {
+    setSelectedType();
     setOpen(false);
     setNote({});
     setLoadForm(false);
-  };
+    setIsValid(false);
+  }
   
   return (
     <React.Fragment>
-      <Fab onClick={handleOpen} aria-label="Add Note" className={classes.fab}>
+      <Fab onClick={handleOpen} aria-label="Add Note" className={classes.fab} color="secondary">
         <AddIcon />
       </Fab>
 
-      <Dialog onClose={handleClose} aria-labelledby="add-note-dialog-title" open={open}>
+      <Dialog 
+        fullWidth={true}
+        maxWidth={'sm'}
+        onClose={handleClose} 
+        aria-labelledby="add-note-dialog-title" 
+        open={open}>
         <DialogTitle id="add-note-dialog-title">Add Note</DialogTitle>
         <DialogContent>
           {!!loadForm 
@@ -66,8 +82,9 @@ function AddNote(props) {
                 setNote={setNote} 
                 state={props.state} 
                 dispatch={props.dispatch} 
+                setIsValid={setIsValid}
               />)
-            : (<NoteType setSelectedType={setSelectedType} selectedType={selectedType} />)}
+            : (<NoteType noteTypes={props.state.noteTypes} setSelectedType={setSelectedType} selectedType={selectedType} />)}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
@@ -75,7 +92,7 @@ function AddNote(props) {
           </Button>
           {!!loadForm
             ? (
-              <Button onClick={handleCreate} color="primary" disabled={!selectedType}>
+              <Button onClick={handleCreate} color="primary" disabled={!isValid}>
                 Save
               </Button>
             ) : (
@@ -88,5 +105,10 @@ function AddNote(props) {
     </React.Fragment>
   );
 }
+
+AddNote.propTypes = {
+  state: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
 
 export default AddNote;

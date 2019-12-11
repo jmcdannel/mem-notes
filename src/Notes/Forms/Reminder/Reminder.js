@@ -4,18 +4,26 @@ import TextField from '@material-ui/core/TextField';
 
 export const noteType = 'reminder';
 
-function Reminder({ note, setNote }) {
+function Reminder({ note, setNote, setIsValid }) {
 
   const handleChange = event => {
     const delta = { text: event.target.value };
     setNote({ ...note, ...delta });
+    validate();
   };
+  
+  const validate = () => {
+    const valid = ( note.text && note.text.length > 3);
+    setIsValid(valid);
+  }
 
   return (
     <TextField
       id="text"
-      label="Multiline"
+      label="Note Text"
       multiline
+      className="note-form"
+      rows="10"
       rowsMax="10"
       value={note.text}
       onChange={handleChange}

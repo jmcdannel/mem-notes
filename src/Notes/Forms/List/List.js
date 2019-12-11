@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { isValid } from 'date-fns/fp'
+import { isValid } from 'date-fns/fp';
 
-export const noteType = 'dueDate';
+const getContent = note => {
+  return (
+    <ul>
+      {note.text.split('\n').map((item, idx) => (
+        <li key={idx}>{item}</li>
+      ))}
+    </ul>);
+}
 
-function DueDate({ note, setNote, setIsValid }) {
+export const noteType = 'list';
 
-  const defaultNote = { text: '', dueDate: null };
+function List({ note, setNote, setIsValid }) {
+
+  const defaultNote = { text: '', dueDate: null, getContent };
+
+
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) {
+      setNote(n => { return { ...n, ...defaultNote } });
+      setInitialized(true);
+    }
+  }, [initialized, setInitialized, setNote, defaultNote] );
 
   const handleChange = event => {
     const delta = { text: event.target.value };
@@ -68,4 +87,4 @@ function DueDate({ note, setNote, setIsValid }) {
   );
 }
 
-export default DueDate;
+export default List;

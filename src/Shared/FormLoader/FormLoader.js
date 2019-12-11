@@ -1,17 +1,28 @@
 
-import React from 'react';
-import Reminder from '../../Notes/Forms/Reminder/Reminder';
+import React, { useState, useEffect } from 'react';
 
 function FormLoader(props) {
 
-  debugger;
   const { noteTypes } = props.state;
-  const noteType = noteTypes.find(type => type.value === props.note.type);
-  const FormComponent = noteType.component;
+  const { type } = props.note;
+
+  const [noteType, setNoteType] = useState();
+
+  useEffect(() => {
+    if (!noteType || noteType.id !== type) {
+      setNoteType(noteTypes.find(ntype => ntype.id === type))
+    }
+  }, [type, noteType, setNoteType, noteTypes]);
+
   
+  const renderComponent = () => {
+    const FormComponent = noteType.component;
+    return ( <FormComponent className="note-form" {...props} />);
+  }
+
   return (
     <React.Fragment>
-      <FormComponent {...props} />
+      {noteType && renderComponent()}
     </React.Fragment>
   );
 }

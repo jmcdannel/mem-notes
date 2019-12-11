@@ -9,19 +9,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 const useStyles = makeStyles(theme => ({
   list: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   }
 }));
 
-function NoteType({ selectedType, setSelectedType }) {
+function NoteType({ noteTypes, selectedType, setSelectedType }) {
   const classes = useStyles();
-  const noteTypes = [
-    { value: 'reminder', label: 'Reminder', component: null },
-    { value: 'duedate', label: 'Note w/Due Date', component: null }
-  ];
   const handleType = type => {
-    if (selectedType && selectedType.value === type.value) {
+    if (selectedType && selectedType.id === type.id) {
       setSelectedType(undefined);
     } else {
       setSelectedType(type);
@@ -36,9 +31,9 @@ function NoteType({ selectedType, setSelectedType }) {
       <List className={classes.list} component="nav" aria-label="select note type">
         {noteTypes.map(type => (
           <ListItem button 
-            key={type.value}
+            key={type.id}
             onClick={() => handleType(type)} 
-            selected={(selectedType && selectedType.value === type.value)}>
+            selected={(selectedType && selectedType.id === type.id)}>
             <ListItemText primary={type.label} />
           </ListItem>
         ))}
