@@ -7,8 +7,6 @@
     "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/pickers": "^3.2.8",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "date-fns": "^2.0.0-beta.5",
     "moment": "^2.24.0",
@@ -38,6 +36,9 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.0"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.3",
+    "node-sass": "^4.13.0",
+    "react-test-renderer": "^16.12.0"
   }
 }

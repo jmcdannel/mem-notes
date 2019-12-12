@@ -42,7 +42,7 @@ function Note({
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="reminder" className={classes.avatar}>
+          <Avatar aria-label="note-type-identifier" className={classes.avatar}>
             {noteType.header.substring(0, 1)}
           </Avatar>
         }
